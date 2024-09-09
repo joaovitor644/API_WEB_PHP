@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .  # Refere-se ao Dockerfile na mesma pasta
+    container_name: php_api
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      DB_NAME: mydb 
+      DB_USER: myuser
+      DB_PWD: mypassword
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_TABLE: users
+    depends_on:
+      - postgres
+    restart: always  # Para reiniciar automaticamente caso falhe
+
+  postgres:
+    image: postgres:13
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always  # Para reiniciar automaticamente caso falhe
+
+volumes:
+  pgdata:
+
