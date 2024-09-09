@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   web:
     build:
-      context: .  # Refere-se ao Dockerfile na mesma pasta
+      context: .  
     container_name: php_api
     ports:
       - "8080:80"
@@ -18,7 +16,7 @@ services:
       DB_TABLE: users
     depends_on:
       - postgres
-    restart: always  # Para reiniciar automaticamente caso falhe
+    restart: always  
 
   postgres:
     image: postgres:13
